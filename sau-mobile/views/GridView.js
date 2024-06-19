@@ -1,6 +1,7 @@
 import React from 'react';
-import { StyleSheet, Text, View, FlatList, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, FlatList, Dimensions, TouchableHighlight } from 'react-native';
 import { Image } from 'react-native'
+import { AbsenseView } from './AbsenseView';
 
 const ClockImage = () => (
   <Image source={ require('../assets/clock.png')}
@@ -67,38 +68,49 @@ const formatData = (data, numColumns) => {
   return data;
 };
 
+
+
 const numColumns = 2;
 export class GridHome extends React.Component {
   renderItem = ({ item, index }) => {
     if (index === 0) {
       return (
-      <View style={[styles.item]}>
+        <TouchableHighlight style={[styles.item]} onPress={() => this.onClickView()}>
+          <View style={[styles.item]}>
               <ClockImage/>
               <Text style={styles.itemText}>{item.key}</Text>
-      </View>
+          </View>
+        </TouchableHighlight>
       );
     } else if (index == 1) {
+
       return (
-        <View style={[styles.item]}>
-                <GradutationImage/>
-                <Text style={styles.itemText}>{item.key}</Text>
-        </View>
+        <TouchableHighlight style={[styles.item]} onPress={() => this.onClickView()}>
+          <View style={[styles.item]}>
+              <CalendarImage/>
+              <Text style={styles.itemText}>{item.key}</Text>
+          </View>
+        </TouchableHighlight>
         );
     }
 
     else if (index == 2) {
       return (
-        <View style={[styles.item]}>
-                <CalendarImage/>
-                <Text style={styles.itemText}>{item.key}</Text>
-        </View>
+        <TouchableHighlight style={[styles.item]} onPress={() => this.onClickView()}>
+          <View style={[styles.item]}>
+              <GradutationImage/>
+              <Text style={styles.itemText}>{item.key}</Text>
+          </View>
+        </TouchableHighlight>
         );
     } else {
       return (
-        <View style={styles.item}>
-          <EmptyImage/>
-          <Text style={styles.itemText}>{item.key}</Text>
-        </View>
+        <TouchableHighlight style={[styles.item]} onPress={() => this.onClickView()}>
+          <View style={[styles.item]}>
+              <EmptyImage/>
+              <Text style={styles.itemText}>{item.key}</Text>
+          </View>
+        </TouchableHighlight>
       );
     }
   };
@@ -137,6 +149,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column-reverse',
     alignSelf: 'flex-start',
     color: '#273f61',
-    paddingTop: 70,
+    paddingTop: 45,
   },
 });
