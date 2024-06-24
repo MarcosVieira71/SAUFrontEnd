@@ -1,53 +1,26 @@
 import React from 'react';
-import { StyleSheet, Text, View, FlatList, Dimensions, TouchableHighlight } from 'react-native';
-import { Image } from 'react-native'
-import { AbsenseView } from './AbsenseView';
+import { StyleSheet, Text, View, FlatList, Dimensions, TouchableOpacity, Image } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const ClockImage = () => (
-  <Image source={ require('../assets/clock.png')}
-      style = {{ width: 70, 
-      height: 70, 
-      tintColor: '#273f61'
-
-      }}
-  />
-)
+  <Image source={require('../assets/clock.png')} style={styles.image} />
+);
 
 const CalendarImage = () => (
-  <Image source={ require('../assets/calendar.png')}
-      style = {{ width: 70, 
-      height: 70, 
-      tintColor: '#273f61'
+  <Image source={require('../assets/calendar.png')} style={styles.image} />
+);
 
-      }}
-  />
-)
-
-const GradutationImage = () => (
-  <Image source={ require('../assets/graduation.png')}
-      style = {{ width: 72, 
-      height: 72, 
-      tintColor: '#273f61'
-      }}
-  />
-)
+const GraduationImage = () => (
+  <Image source={require('../assets/graduation.png')} style={styles.image} />
+);
 
 const EmptyImage = () => (
-  <Image source={ require('../assets/empty.png')}
-      style = {{ width: 72, 
-      height: 72, 
-      tintColor: '#273f61'
-      }}
-  />
-)
-const data = [
-  { key: 'Horarios e Sala de Aula' }, 
-  { key: 'Controle de faltas' }, 
-  { key: 'Disciplinas em curso' }, 
-  { key: 'Title 1' }, 
-  { key: 'Title 2' }, 
-  { key: 'Title 3' }
+  <Image source={require('../assets/empty.png')} style={styles.image} />
+);
 
+const data = [
+  { key: 'Horarios e Sala de Aula' },
+  { key: 'Disciplinas em curso' },
 ];
 
 const formatData = (data, numColumns) => {
@@ -59,79 +32,52 @@ const formatData = (data, numColumns) => {
     numberOfElementsLastRow--;
   }
 
-  for(i in data) {
-    if (i.index == 0) {
-      console.log("a");
-    }
-  }
-
   return data;
 };
 
 
 
 const numColumns = 2;
-export class GridHome extends React.Component {
-  renderItem = ({ item, index }) => {
-    if (index === 0) {
-      return (
-        <TouchableHighlight style={[styles.item]} onPress={() => this.onClickView()}>
-          <View style={[styles.item]}>
-              <ClockImage/>
-              <Text style={styles.itemText}>{item.key}</Text>
-          </View>
-        </TouchableHighlight>
-      );
-    } else if (index == 1) {
+const GridHome = () => {
+  const navigation = useNavigation();
 
-      return (
-        <TouchableHighlight style={[styles.item]} onPress={() => this.onClickView()}>
-          <View style={[styles.item]}>
-              <CalendarImage/>
-              <Text style={styles.itemText}>{item.key}</Text>
-          </View>
-        </TouchableHighlight>
-        );
+  const renderItem = ({ item, index }) => {
+    if (item.empty === true) {
+      return <View style={[styles.item, styles.itemInvisible]} />;
     }
+    const onPressHandler = () => {
+      if(item.key === "Disciplinas em curso")
+      navigation.navigate('Subjects'); // Navegue para a outra página
+    };
 
-    else if (index == 2) {
-      return (
-        <TouchableHighlight style={[styles.item]} onPress={() => this.onClickView()}>
-          <View style={[styles.item]}>
-              <GradutationImage/>
-              <Text style={styles.itemText}>{item.key}</Text>
-          </View>
-        </TouchableHighlight>
-        );
-    } else {
-      return (
-        <TouchableHighlight style={[styles.item]} onPress={() => this.onClickView()}>
-          <View style={[styles.item]}>
-              <EmptyImage/>
-              <Text style={styles.itemText}>{item.key}</Text>
-          </View>
-        </TouchableHighlight>
-      );
-    }
+    let IconComponent = EmptyImage;
+    if (index === 0) IconComponent = ClockImage;
+    else if (index === 1) IconComponent = GraduationImage;
+    else if (index === 2) IconComponent = CalendarImage;
+
+    return (
+      <TouchableOpacity style={styles.item} onPress={onPressHandler}>
+        <IconComponent />
+        <Text style={styles.itemText}>{item.key}</Text>
+      </TouchableOpacity>
+    );
   };
 
-  render() {
-    return (
-      <FlatList
-        data={formatData(data, numColumns)}
-        style={styles.container}
-        renderItem={this.renderItem}
-        numColumns={numColumns}
-      />
-    );
-  }
-}
+  return (
+    <FlatList
+      data={formatData(data, numColumns)}
+      style={styles.container}
+      renderItem={renderItem}
+      numColumns={numColumns}
+    />
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginVertical: 20,
-    marginHorizontal: 8
+    marginHorizontal: 8,
   },
   item: {
     backgroundColor: '#F0B929',
@@ -144,11 +90,15 @@ const styles = StyleSheet.create({
   itemInvisible: {
     backgroundColor: 'transparent',
   },
-  
   itemText: {
-    flexDirection: 'column-reverse',
-    alignSelf: 'flex-start',
     color: '#273f61',
-    paddingTop: 45,
+    paddingTop: 10,
+  },
+  image: {
+    width: 70,
+    height: 70,
+    tintColor: '#273f61',
   },
 });
+
+export { GridHome };
