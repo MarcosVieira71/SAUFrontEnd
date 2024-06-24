@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, FlatList, Dimensions, TouchableOpacity, Image } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 const ClockImage = () => (
   <Image source={require('../assets/clock.png')} style={styles.image} />
@@ -35,11 +35,12 @@ const formatData = (data, numColumns) => {
   return data;
 };
 
-
-
 const numColumns = 2;
 const GridHome = () => {
   const navigation = useNavigation();
+
+  const route = useRoute();
+  const loginData = route.params.data
 
   const renderItem = ({ item, index }) => {
     if (item.empty === true) {
@@ -64,12 +65,15 @@ const GridHome = () => {
   };
 
   return (
-    <FlatList
-      data={formatData(data, numColumns)}
-      style={styles.container}
-      renderItem={renderItem}
-      numColumns={numColumns}
-    />
+    <View style={styles.container}>
+    <Text>{loginData}</Text>
+      <FlatList
+        data={formatData(data, numColumns)}
+        style={styles.container}
+        renderItem={renderItem}
+        numColumns={numColumns}
+      />
+    </View>
   );
 };
 

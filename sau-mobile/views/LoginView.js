@@ -17,9 +17,38 @@ const PUCLogo = () => (
 const generatePasswordURL = 'https://sau.puc-rio.br/WebGerarSenha/Default.aspx?sessao=VmluY3Vsbz1BJlNpc3RMb2dpbj1QVUNPTkxJ';
 
 const LoginView = () => {
-    const [number, onChangeNumber] = React.useState('');
-    const [text, onChangeText] = React.useState('');
-    const [val, setVal] = useState(false);
+    const navigation = useNavigation();
+    let [username, setUsername] = React.useState('');
+    let [password, setPassword] = React.useState('');
+
+    let makeLogin = (username, password) => {
+        fetch(`http://192.168.0.10:8000/api/v1/auth/login?username=${username}&password=${password}`)
+        .then(res => {
+            console.log("YES:", res.status);
+            console.log("header:", res.headers);
+            return res.text();
+        })
+        .then(
+            (result) => {
+                //&lt;b&gt;Caio&lt;/b&gt; (&lt;b&gt;1921050&lt;/b&gt;)
+                //Boa tarde &lt;Caio&lt;/ (&lt;1921050&lt;/)
+                let r = result.replace(/<[^>]+>/g, '').replace(/b&[^;]+;/g, '').replace(/&[^;]+;/g, '')
+                getloginData = r;
+                console.log(getloginData);
+                return r;
+            },
+            (error) => {
+                console.log(">>>>>>", error);
+            }
+        )
+    };
+
+    const routeTo = (username, name, navigation) => {
+        makeLogin(username, password);
+        if (getloginData.includes('Boa') || getloginData.includes('Bom')) {
+            navigation.navigate("Home", { data: getloginData});
+        }
+    }
 
     return (
         <View style={styles.parentContainer}>
@@ -28,18 +57,18 @@ const LoginView = () => {
             </View>
             <View style={styles.bottomContainer}>
                 <TextInput style={styles.input} 
-                            onChangeText={onChangeText}
-                            value={text}
+                            value={username}
+                            onChangeText={(value) => setUsername(value)}
                             placeholder='Matricula'
+                            keyboardType='number-pad'
                             />
                 <TextInput style={styles.input} 
                             secureTextEntry={true}
-                            onChangeText={onChangeNumber}
-                            value={number}
+                            value={password}
+                            onChangeText={(value) => setPassword(value)}
                             placeholder='Senha'
-                            keyboardType='numeric'
                            />
-                <Pressable style={styles.studentButton} >
+                <Pressable style={styles.studentButton} onPress={() => routeTo(username, password, navigation)}>
                     <Text style={styles.studentBtnLabel}>
                         Entrar
                     </Text>
