@@ -35,6 +35,8 @@ const formatData = (data, numColumns) => {
   return data;
 };
 
+
+
 const numColumns = 2;
 const GridHome = () => {
   const navigation = useNavigation();
