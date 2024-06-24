@@ -101,4 +101,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export { GridHome };
+export default GridHome;
