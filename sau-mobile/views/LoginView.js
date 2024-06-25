@@ -1,5 +1,5 @@
-import React, { useCallback, useState } from 'react'
-import { View, Text, StyleSheet, Image, Dimensions, Button, Pressable, Alert } from 'react-native';
+import React, { useCallback, useState, useEffect } from 'react'
+import { View, Text, StyleSheet, Image, Dimensions, ActivityIndicator, Button, Pressable, Alert } from 'react-native';
 import { Link, useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { TextInput } from 'react-native-gesture-handler';
@@ -21,74 +21,50 @@ const LoginView = () => {
     let [username, setUsername] = React.useState('');
     let [password, setPassword] = React.useState('');
 
-    let makeLogin = (username, password) => {
-        fetch(`http://192.168.0.10:8000/api/v1/auth/login?username=${username}&password=${password}`)
-        .then(res => {
-            console.log("YES:", res.status);
-            console.log("header:", res.headers);
-            return res.text();
-        })
-        .then(
-            (result) => {
-                //&lt;b&gt;Caio&lt;/b&gt; (&lt;b&gt;1921050&lt;/b&gt;)
-                //Boa tarde &lt;Caio&lt;/ (&lt;1921050&lt;/)
-                let r = result.replace(/<[^>]+>/g, '').replace(/b&[^;]+;/g, '').replace(/&[^;]+;/g, '')
-                getloginData = r;
-                console.log(getloginData);
-                return r;
-            },
-            (error) => {
-                console.log(">>>>>>", error);
-            }
-        )
-    };
-
-    const routeTo = (username, name, navigation) => {
-        makeLogin(username, password);
-        if (getloginData.includes('Boa') || getloginData.includes('Bom')) {
-            navigation.navigate("Home", { data: getloginData});
-        }
+    const onPressLogin = (username, password, navigation) => {
+        navigation.navigate("Loading", { username: username, password: password })
     }
 
     return (
-        <View style={styles.parentContainer}>
-            <View style={styles.topContainer}>
-                <SAULogo/>
-            </View>
-            <View style={styles.bottomContainer}>
-                <TextInput style={styles.input} 
-                            value={username}
-                            onChangeText={(value) => setUsername(value)}
-                            placeholder='Matricula'
-                            keyboardType='number-pad'
-                            />
-                <TextInput style={styles.input} 
-                            secureTextEntry={true}
-                            value={password}
-                            onChangeText={(value) => setPassword(value)}
-                            placeholder='Senha'
-                           />
-                <Pressable style={styles.studentButton} onPress={() => routeTo(username, password, navigation)}>
-                    <Text style={styles.studentBtnLabel}>
-                        Entrar
-                    </Text>
-                </Pressable>
-                <Text style={styles.rememberLabel}>
-                    Lembrar minha senha
-                </Text>
-                <Text style={styles.forgetLabel}
-                    onPress={() => Linking.openURL(generatePasswordURL)}>
-                    Esqueceu a senha?
-                </Text>
-                <Pressable style={styles.registerButton} 
-                onPress={() => Linking.openURL(generatePasswordURL)} >
-                    <Text style={styles.registerBtnLabel}>
-                        Cadastrar primeira senha
-                    </Text>
-                </Pressable>
-            </View>
+    <View style={styles.parentContainer}>
+        <View style={styles.topContainer}>
+            <SAULogo/>
         </View>
-    );
+        <View style={styles.bottomContainer}>
+            <TextInput style={styles.input} 
+                        value={username}
+                        onChangeText={(value) => setUsername(value)}
+                        placeholder='Matricula'
+                        keyboardType='number-pad'
+                        />
+            <TextInput style={styles.input} 
+                        secureTextEntry={true}
+                        value={password}
+                        onChangeText={(value) => setPassword(value)}
+                        placeholder='Senha'
+                        />
+            <Pressable style={styles.studentButton} onPress={() => onPressLogin(username, password, navigation)}>
+                <Text style={styles.studentBtnLabel}>
+                    Entrar
+                </Text>
+            </Pressable>
+            <Text style={styles.rememberLabel}>
+                Lembrar minha senha
+            </Text>
+            <Text style={styles.forgetLabel}
+                onPress={() => Linking.openURL(generatePasswordURL)}>
+                Esqueceu a senha?
+            </Text>
+            <Pressable style={styles.registerButton} 
+            onPress={() => Linking.openURL(generatePasswordURL)} >
+                <Text style={styles.registerBtnLabel}>
+                    Cadastrar primeira senha
+                </Text>
+            </Pressable>
+        </View>
+    </View>
+);
+
 }
 
 const styles = StyleSheet.create({
@@ -170,3 +146,30 @@ const styles = StyleSheet.create({
 
 
 export { LoginView }
+
+    // let makeLogin = (username, password) => {
+    //     //fetch(`http://192.168.0.10:8000/api/v1/auth/login?username=${username}&password=${password}`)
+
+    //     fetch(`http://192.168.0.10:8000/api/v1/auth/login?username=1921050&password=962Bruto`)
+    //     .then(res => {
+    //         console.log(res.status);
+    //         // o problema do {"_h": 0, "_i": 0, "_j": null, "_k": null} eh aqui
+    //         //console.log("res.text:", res.text());
+    //     }).then(
+    //         (result) => {
+    //             //&lt;b&gt;Caio&lt;/b&gt; (&lt;b&gt;1921050&lt;/b&gt;)
+    //             //Boa tarde &lt;Caio&lt;/ (&lt;1921050&lt;/)
+    //             if (res.status == 200)
+    //             {
+    //                 let r = result.replace(/<[^>]+>/g, '').replace(/b&[^;]+;/g, '').replace(/&[^;]+;/g, '')
+    //                 getloginData = r;
+    //                 console.log("logindata: result:", getloginData);
+    //                 return r;
+    //             }
+                
+    //         },
+    //         (error) => {
+    //             console.log(">>>>>>", error);
+    //         }
+    //     )
+    // };

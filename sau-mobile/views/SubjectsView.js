@@ -29,9 +29,18 @@ const Subjects = () => {
             <Text style={styles.cell}>Cálculo A Uma Variável</Text>
             <Text style={styles.cell}>6</Text>
           </View>
+          <View style={styles.tableRow}>
+            <Text style={styles.cell}>MAT4200</Text>
+            <Text style={styles.cell}>Algebra Linear I</Text>
+            <Text style={styles.cell}>4</Text>
+          </View>
+          <View style={styles.tableRow}>
+            <Text style={styles.cell}>INF1039</Text>
+            <Text style={styles.cell}>PROJETOS: APLICA INTERATIVAS</Text>
+            <Text style={styles.cell}>4</Text>
+          </View>
         </View>
       </View>
-      <ButtonHeader />
       </View>
   );
 };
@@ -51,11 +60,11 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: 'white', 
+    color: '#F0B929', 
   },
   semester: {
     fontSize: 16,
-    color: 'white',
+    color: '#F0B929',
   },
   content: {
     flex: 1,
@@ -69,7 +78,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     borderBottomWidth: 1,
-    borderColor: '#CCCCCC',
+    borderColor: '#F0B929',
     paddingVertical: 10,
   },
   headerCell: {
@@ -80,6 +89,7 @@ const styles = StyleSheet.create({
     flex: 1,
     textAlign: 'center',
     fontSize: 16,
+    color: '#F0B929'
   },
 });
 

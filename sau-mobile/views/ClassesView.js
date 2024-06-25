@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { HeaderView } from './HeaderView';
 
 export default function ClassesView() {
   const hours = ['07 - 08', '08 - 09', '09 - 10', '10 - 11', '11 - 12', '12 - 13', '13 - 14', '14 - 15'];
@@ -18,13 +19,7 @@ export default function ClassesView() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Ionicons name="menu" size={24} color="black" />
-        <View style={styles.headerCenter}>
-          <View style={styles.headerImagePlaceholder} />
-        </View>
-        <Ionicons name="arrow-back" size={24} color="black" />
-      </View>
+      <HeaderView></HeaderView>
       <View style={styles.content}>
         <Text style={styles.title}>Horários e Salas de Aula</Text>
         <Text style={styles.semester}>Semestre: 2024.1</Text>
@@ -57,26 +52,7 @@ export default function ClassesView() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-  },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: 10,
-    paddingVertical: 15,
-    backgroundColor: '#f8f8f8',
-    borderBottomWidth: 1,
-    borderBottomColor: '#ddd',
-  },
-  headerCenter: {
-    flex: 1,
-    alignItems: 'center',
-  },
-  headerImagePlaceholder: {
-    width: 30,
-    height: 30,
-    backgroundColor: '#ddd',
+    backgroundColor: '#273f61'
   },
   content: {
     flex: 1,
@@ -87,10 +63,12 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     marginVertical: 20,
+    color: '#F0B929'
   },
   semester: {
     fontSize: 16,
     marginBottom: 20,
+    color: '#F0B929'
   },
   scheduleTable: {
     borderWidth: 1,

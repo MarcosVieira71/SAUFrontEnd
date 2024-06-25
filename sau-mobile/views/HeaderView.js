@@ -24,7 +24,6 @@ export class ImgHeader extends React.Component {
     }
 }
 
-
 export class ButtonHeader extends React.Component {
     render() {
         return (
@@ -42,12 +41,13 @@ export class ButtonHeader extends React.Component {
 const styles = StyleSheet.create({
     containerHeader: {
         flex: 0.1,
-        backgroundColor: '#273f61',
+        backgroundColor: '#3A5983',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        marginVertical: 30,
     },
 
     containerImg: {
-        alignSelf: 'center'
+        alignSelf: 'center',
     },
   });
