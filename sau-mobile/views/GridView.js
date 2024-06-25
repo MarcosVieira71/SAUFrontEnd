@@ -49,6 +49,8 @@ const GridHome = () => {
     const onPressHandler = () => {
       if(item.key === "Disciplinas em curso")
       navigation.navigate('Subjects'); // Navegue para a outra página
+      if(item.key === "Horarios e Sala de Aula")
+      navigation.navigate('Classes');
     };
 
     let IconComponent = EmptyImage;
