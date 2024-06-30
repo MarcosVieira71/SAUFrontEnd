@@ -1,0 +1,27 @@
+{
+  "expo": {
+    "name": "SAU Mobile",
+    "slug": "sau-mobile",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/iconsau.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splashscreen.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#273F61"
+    },
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-iconsau.png",
+        "backgroundColor": "#273F61"
+      }
+    },
+    "web": {
+      "favicon": "./assets/faviconsau.png"
+    }
+  }
+}
